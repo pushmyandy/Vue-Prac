@@ -19,7 +19,7 @@ export default {
   .header
     width 100%
     height 10rem
-    background rgba(7,17,27,0.5)
+    background rgba(7,17,27,0.4)
     display flex
     flex-direction row
     overflow hidden

@@ -24,6 +24,20 @@ export default {
   name: 'Home',
   components: {
     homeHeader
+  },
+  data () {
+    return {
+      seller: {},
+      ERR_OK: 0
+    }
+  },
+  created () {
+    this.$http.get('/api/seller').then((res) => {
+      res = res.body
+      if (res.errno === this.ERR_OK) {
+        this.seller = res.data
+      }
+    })
   }
 }
 </script>
