@@ -1,7 +1,7 @@
 <template>
   <div>
     <home-header></home-header>
-    <div class="homeTab">
+    <div class="homeTab border-1px">
       <router-link to="/goods">
         <div>商品</div>
       </router-link>
@@ -19,20 +19,21 @@
 </template>
 
 <script>
-  import homeHeader from './components/homeHeader'
-  export default {
-    name: "Home",
-    components: {
-      homeHeader
-    }
+import homeHeader from './components/homeHeader'
+export default {
+  name: 'Home',
+  components: {
+    homeHeader
   }
+}
 </script>
 
 <style scoped lang='stylus'>
+  @import "../../../src/assets/stylus/mixin.styl"
   .homeTab
     width 100%
     height 4rem
-    border-bottom 1px solid rgba(7,17,27,0.1)
+    border-1px(rgba(7,17,27,0.1))
     display flex
     flex-direction row
     a
