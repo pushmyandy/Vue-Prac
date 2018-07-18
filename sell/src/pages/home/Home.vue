@@ -1,6 +1,6 @@
 <template>
   <div>
-    <home-header></home-header>
+    <home-header :seller="seller"></home-header>
     <div class="homeTab border-1px">
       <router-link to="/goods">
         <div>商品</div>
