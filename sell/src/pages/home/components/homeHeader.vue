@@ -62,7 +62,6 @@
             <div class="detailClose">
               <i class="icon-close" @click="closeDetail"></i>
             </div>
-            <!--<div class="blurbg"></div>-->
           </div>
         </transition>
       </div>
@@ -250,6 +249,7 @@ export default {
       .detailWrapper
         width 100%
         min-height 100%
+        backdrop-filter blur(10px)
       .detailMain
         margin-top 5rem
         padding-bottom 4.5rem

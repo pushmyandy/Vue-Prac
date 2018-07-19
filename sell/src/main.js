@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import '../src/assets/stylus/index.styl'
 import '../src/assets/stylus/style.css'
+import '../static/css/reset.css'
 import Resource from 'vue-resource'
 
 Vue.config.productionTip = false
