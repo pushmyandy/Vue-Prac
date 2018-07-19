@@ -1,3 +1,4 @@
+
 <template>
   <div>
       <div class="header">
@@ -17,17 +18,27 @@
             </div>
           </div>
         </div>
-        <div class="number" v-if="seller.supports">
+        <div @click="showDetail" class="number" v-if="seller.supports">
           <span class="count">{{seller.supports.length}}个</span>
           <span class="icon-keyboard_arrow_right"></span>
         </div>
         <div class="broadcast">
           <span class="broadcastTitle"></span>
-          <span class="broadcastText">{{seller.bulletin}}</span>
+          <span class="broadcastText" @click="showDetail">{{seller.bulletin}}</span>
           <span class="icon-keyboard_arrow_right"></span>
         </div>
         <div class="backImg">
           <img :src="seller.avatar" width="100%" height="100%">
+        </div>
+        <div class="blurImg" v-show="detailShow"> <!--sticky footer 布局-->
+          <div class="detailWrapper clearfix">
+            <div class="detailMain"></div>
+          </div>
+          <div class="detailClose">
+            <i class="icon-close"></i>
+          </div>
+          <!--<div class="blurbg"></div>-->
+          <!--<div @click="closeDetail" class="closeDetail icon-close"></div>-->
         </div>
       </div>
   </div>
@@ -36,8 +47,21 @@
 <script>
 export default {
   name: 'homeHeader',
+  data () {
+    return {
+      detailShow: false
+    }
+  },
   props: {
     seller: Object
+  },
+  methods: {
+    showDetail () {
+      this.detailShow = true
+    },
+    closeDetail () {
+      this.detailShow = false
+    }
   },
   created () {
     this.classMap = ['decrease', 'discount', 'invoice', 'guarantee', 'special']
@@ -174,4 +198,28 @@ export default {
       height 100%
       z-index -999
       filter blur(10px)
+    .blurImg
+      position fixed
+      z-index 100
+      top 0
+      bottom 0
+      left 0
+      right 0
+      overflow auto
+      background-color rgba(7,17,27,0.8)
+      .detailWrapper
+        width 100%
+        min-height 100%
+      .detailMain
+        margin-top 9rem
+        padding-bottom 4.5rem
+      .detailClose
+        color rgba(255,255,255,0.5)
+        position relative
+        widows 2rem
+        height 2rem
+        margin -4.5rem auto 0 auto
+        clear both
+        font-size 3rem
+        text-align center
 </style>
