@@ -34,11 +34,13 @@
           <div class="detailWrapper clearfix">
             <div class="detailMain">
               <h1 class="title">{{seller.name}}</h1>
-              <div class="stars"></div>
+              <div class="stars">
+                <star :size="48" :score="seller.score"></star>
+              </div>
             </div>
           </div>
           <div class="detailClose">
-            <i class="icon-close"></i>
+            <i class="icon-close" @click="closeDetail"></i>
           </div>
           <!--<div class="blurbg"></div>-->
         </div>
@@ -47,6 +49,7 @@
 </template>
 
 <script>
+import star from './star/star'
 export default {
   name: 'homeHeader',
   data () {
@@ -56,6 +59,9 @@ export default {
   },
   props: {
     seller: Object
+  },
+  components: {
+    star
   },
   methods: {
     showDetail () {
@@ -221,6 +227,10 @@ export default {
           font-weight 700
           color rgba(255,255,255,1)
           line-height 2rem
+        .stars
+          margin-top 1rem
+          margin-bottom 1.2rem
+          text-align center
       .detailClose
         color rgba(255,255,255,0.5)
         position relative
