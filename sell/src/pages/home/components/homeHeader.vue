@@ -32,13 +32,15 @@
         </div>
         <div class="blurImg" v-show="detailShow"> <!--sticky footer 布局-->
           <div class="detailWrapper clearfix">
-            <div class="detailMain"></div>
+            <div class="detailMain">
+              <h1 class="title">{{seller.name}}</h1>
+              <div class="stars"></div>
+            </div>
           </div>
           <div class="detailClose">
             <i class="icon-close"></i>
           </div>
           <!--<div class="blurbg"></div>-->
-          <!--<div @click="closeDetail" class="closeDetail icon-close"></div>-->
         </div>
       </div>
   </div>
@@ -211,8 +213,14 @@ export default {
         width 100%
         min-height 100%
       .detailMain
-        margin-top 9rem
+        margin-top 8rem
         padding-bottom 4.5rem
+        .title
+          text-align center
+          font-size 1.6rem
+          font-weight 700
+          color rgba(255,255,255,1)
+          line-height 2rem
       .detailClose
         color rgba(255,255,255,0.5)
         position relative
