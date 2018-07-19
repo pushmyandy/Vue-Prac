@@ -30,26 +30,48 @@
         <div class="backImg">
           <img :src="seller.avatar" width="100%" height="100%">
         </div>
-        <div class="blurImg" v-show="detailShow"> <!--sticky footer 布局-->
-          <div class="detailWrapper clearfix">
-            <div class="detailMain">
-              <h1 class="title">{{seller.name}}</h1>
-              <div class="stars">
-                <star :size="48" :score="seller.score"></star>
+        <transition name="fade">
+          <div class="blurImg" v-show="detailShow"> <!--sticky footer 布局-->
+            <div class="detailWrapper clearfix">
+              <div class="detailMain">
+                <h1 class="title">{{seller.name}}</h1>
+                <div class="stars">
+                  <star :size="48" :score="seller.score"></star>
+                </div>
+                <div class="divideLine">
+                  <divide>
+                    <div class="lineText">优惠信息</div>
+                  </divide>
+                </div>
+                <ul v-if="seller.supports" class="iconSupports">
+                  <li class="supportItem" v-for="(item, index) in seller.supports" :key="index">
+                    <span class="supportIcons" :class="classMap[seller.supports[index].type]"></span>
+                    <span class="supportTexts">{{seller.supports[index].description}}</span>
+                  </li>
+                </ul>
+                <div class="divideLine">
+                  <divide>
+                    <div class="lineText">商家公告</div>
+                  </divide>
+                </div>
+                <div class="bulletin">
+                  <p class="content">{{seller.bulletin}}</p>
+                </div>
               </div>
             </div>
+            <div class="detailClose">
+              <i class="icon-close" @click="closeDetail"></i>
+            </div>
+            <!--<div class="blurbg"></div>-->
           </div>
-          <div class="detailClose">
-            <i class="icon-close" @click="closeDetail"></i>
-          </div>
-          <!--<div class="blurbg"></div>-->
-        </div>
+        </transition>
       </div>
   </div>
 </template>
 
 <script>
 import star from './star/star'
+import divide from './divide/divide'
 export default {
   name: 'homeHeader',
   data () {
@@ -61,7 +83,8 @@ export default {
     seller: Object
   },
   components: {
-    star
+    star,
+    divide
   },
   methods: {
     showDetail () {
@@ -81,8 +104,9 @@ export default {
   @import "../../../assets/stylus/mixin.styl"
   .header
     color white
+    box-sizing border-box
     width 100%
-    height 10rem
+    height 12rem
     background rgba(7,17,27,0.5)
     display flex
     flex-direction row
@@ -150,7 +174,7 @@ export default {
       font-size 1rem
       position absolute
       text-align center
-      right 4rem
+      right 1rem
       bottom 2.5rem
       height 2.2rem
       border-radius 1rem
@@ -192,12 +216,14 @@ export default {
         white-space nowrap
         text-overflow ellipsis
         overflow hidden
+        margin-left 1rem
         line-height 2rem
       .icon-keyboard_arrow_right
+        text-align center
         width 10%
         height 100%
         line-height 2rem
-        margin-right 0.2rem
+        margin-left  2rem
     .backImg
       position absolute
       top 0
@@ -206,6 +232,12 @@ export default {
       height 100%
       z-index -999
       filter blur(10px)
+    .fade-enter-active
+      transition all 1s ease
+    .fade-leave-active
+      transition all 1s cubic-bezier(1.0, 0.5, 0.8, 1.0)
+    .fade-enter, .fade-leave-to
+      opacity 0
     .blurImg
       position fixed
       z-index 100
@@ -219,7 +251,7 @@ export default {
         width 100%
         min-height 100%
       .detailMain
-        margin-top 8rem
+        margin-top 5rem
         padding-bottom 4.5rem
         .title
           text-align center
@@ -228,15 +260,62 @@ export default {
           color rgba(255,255,255,1)
           line-height 2rem
         .stars
-          margin-top 1rem
-          margin-bottom 1.2rem
+          margin-top 2rem
+          margin-bottom 2rem
           text-align center
+        .divideLine
+          margin 0 auto
+          .lineText
+            font-weight 700
+            font-size 1.2rem
+            padding 0 0.5rem
+        .iconSupports
+          width 80%
+          margin 0 auto
+          margin-bottom 2rem
+          .supportItem
+            padding 0 1rem
+            font-size 0
+            margin-bottom 1rem
+            &:last-child
+              margin-bottom 0
+            .supportIcons
+              display inline-block
+              width 1.5rem
+              height 1.5rem
+              vertical-align top
+              margin-right 0.8rem
+              background-size 1.5rem 1.5rem
+              background-repeat no-repeat
+              &.decrease
+                bg-image('decrease_2')
+              &.discount
+                bg-image('discount_2')
+              &.invoice
+                bg-image('invoice_2')
+              &.guarantee
+                bg-image('guarantee_2')
+              &.special
+                bg-image('special_2')
+            .supportTexts
+              display inline-block
+              font-size 1rem
+              line-height 1.5rem
+              height 1.5rem
+        .bulletin
+          width 80%
+          margin 0 auto 1rem auto
+          padding 2rem
+          font-size 1rem
+          line-height 2rem
+          font-weight 200
+          color rgb(255,255,255)
       .detailClose
         color rgba(255,255,255,0.5)
         position relative
         widows 2rem
         height 2rem
-        margin -4.5rem auto 0 auto
+        margin -2rem auto 1em auto
         clear both
         font-size 3rem
         text-align center
