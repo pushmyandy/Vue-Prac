@@ -17,7 +17,9 @@
         <li v-for="(item, index) in goods" :key="index">
           <h1 class="goodsTitle">{{item.name}}</h1>
           <ul>
-            <li v-for="(food, index) in item.foods" :key="index">
+            <li v-for="(food, index) in item.foods" :key="index"
+            class="foodItem border-1px"
+            >
               <div class="foodIcon"><img :src="food.icon"></div>
               <div class="foodContent">
                 <h2 class="foodName">{{food.name}}</h2>
@@ -27,8 +29,8 @@
                   <span>好评率{{food.rating}}%</span>
                 </div>
                 <div>
-                  <span>￥{{food.price}}</span>
-                  <span v-show="food.oldPrice">￥{{food.oldPrice}}</span>
+                  <span class="foodPrice">￥{{food.price}}</span>
+                  <span v-show="food.oldPrice" class="oldPrice">￥{{food.oldPrice}}</span>
                 </div>
               </div>
             </li>
@@ -108,5 +110,55 @@ export default {
           &.special
             bg-image('special_3')
     .rightMenu
-      
+      flex: 1
+      .goodsTitle
+        padding-left 0.2rem
+        border-left 2px solid #d9dde1
+        font-size 1.2rem
+        line-height 1.6rem
+        background #f3f5f7
+        color rgb(147, 153, 159)
+      .foodItem
+        display flex
+        margin 1rem
+        padding-bottom 1rem
+        border-1px(lightgray)
+        &.last-child
+          padding-bottom 0
+        .foodIcon
+          width 5rem
+          height 5rem
+          margin-right 1rem
+          img
+            display block
+            width 100%
+            height 100%
+        .foodContent
+          h2
+            font-size 1.3rem
+            line-height 1.3rem
+            font-weight 800
+          .foodDesc
+            font-size 1rem
+            line-height 1rem
+            color lightgray
+            margin-bottom 0.5rem
+            margin-top 0.5rem
+          .extra
+            margin-bottom 0.5rem
+            font-size 1rem
+            line-height 1rem
+            color lightgray
+            &.first-child
+              margin-right 1rem
+          .foodPrice
+            font-size 1.2rem
+            line-height 1.2rem
+            font-weight 700
+            color red
+          .oldPrice
+            font-size 1rem
+            line-height 1rem
+            font-weight 700
+            color lightgray
 </style>
