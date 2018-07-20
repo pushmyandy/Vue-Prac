@@ -1,9 +1,10 @@
 <template>
   <div class="goods">
     <div class="leftMenu" ref="leftMenu">
-      <ul >
+      <ul>
         <li v-for="(item, index) in goods" :key="index"
-         class="leftItem" >
+         class="leftItem" :class="{'current': currentIndex === index}"
+        @click="handleLeftClick(index)">
           <span class="text border-1px">
             <span v-show="item.type>0" class="icon"
                   :class="classMap[item.type]"
@@ -15,7 +16,7 @@
     </div>
     <div class="rightMenu" ref="foodMenu">
       <ul >
-        <li v-for="(item, index) in goods" :key="index" class="foodList">
+        <li v-for="(item, index) in goods" :key="index" class="listFood">
           <h1 class="goodsTitle">{{item.name}}</h1>
           <ul>
             <li v-for="(food, index) in item.foods" :key="index"
@@ -63,11 +64,11 @@ export default {
       res = res.body
       if (res.errno === this.ERR_OK) {
         this.goods = res.data
+        this.$nextTick(() => { // 等待渲染完成
+          this._initScroll()
+          this._calculateHeight()
+        })
       }
-    })
-    this.$nextTick(() => {
-      this._initScroll()
-      this._calculateHeight()
     })
   },
   computed: {
@@ -75,7 +76,7 @@ export default {
       for (let i = 0; i < this.listHeight.length; i++) {
         let preHeight = this.listHeight[i]
         let afterHeight = this.listHeight[i + 1]
-        if (this.scrollY > preHeight && this.scrollY < afterHeight) {
+        if (!afterHeight || (this.scrollY >= preHeight && this.scrollY < afterHeight)) {
           return i
         }
       }
@@ -84,23 +85,30 @@ export default {
   },
   methods: {
     _initScroll () {
-      this.menuScroll = new Bscroll(this.$refs.leftMenu, {})
-      this.goodScroll = new Bscroll(this.$refs.foodMenu, {
-        probeType: 3
+      this.menuScroll = new Bscroll(this.$refs.leftMenu, {
+        click: true
       })
-      this.goodScroll.on('scroll', (pos) => {
+      this.foodScroll = new Bscroll(this.$refs.foodMenu, {
+        probeType: 3 // 获取滚动距离
+      })
+      this.foodScroll.on('scroll', (pos) => {
         this.scrollY = Math.abs(Math.round(pos.y))
       })
     },
     _calculateHeight () {
-      let foodList = this.$refs.foodMenu.getElementsByClassName('foodList')
+      let foodList = this.$refs.foodMenu.getElementsByClassName('listFood')
       let height = 0
       this.listHeight.push(height)
-      for (let i = 0; i < foodList.height; i++) {
-        let item = foodList[i]
+      for (let i = 0; i < foodList.length; i++) {
+        let item = foodList.item(i)
         height += item.clientHeight
         this.listHeight.push(height)
       }
+    },
+    handleLeftClick (index) {
+      let foodList = this.$refs.foodMenu.getElementsByClassName('listFood')
+      let el = foodList[index]
+      this.foodScroll.scrollToElement(el, 300) // 滚动接口 后面是时间
     }
   }
 }
@@ -127,6 +135,14 @@ export default {
         line-height 1.2rem
         font-size 1.2rem
         height 4rem
+        &.current
+          background white
+          position relative
+          font-weight 700
+          z-index 10
+          margin-top -1px
+          .text
+            border-none()
         .text
           font-size 1rem
           display table-cell
@@ -166,8 +182,6 @@ export default {
         border-1px(lightgray)
         &:last-child
           margin-bottom 0
-          &:after
-            display none
         .foodIcon
           width 5rem
           height 5rem
