@@ -53,7 +53,8 @@ export default {
     return {
       ERR_OK: 0,
       goods: [],
-      listHeight: []
+      listHeight: [],
+      scrollY: 0
     }
   },
   created () {
@@ -69,10 +70,27 @@ export default {
       this._calculateHeight()
     })
   },
+  computed: {
+    currentIndex () {
+      for (let i = 0; i < this.listHeight.length; i++) {
+        let preHeight = this.listHeight[i]
+        let afterHeight = this.listHeight[i + 1]
+        if (this.scrollY > preHeight && this.scrollY < afterHeight) {
+          return i
+        }
+      }
+      return 0
+    }
+  },
   methods: {
     _initScroll () {
       this.menuScroll = new Bscroll(this.$refs.leftMenu, {})
-      this.goodScroll = new Bscroll(this.$refs.foodMenu, {})
+      this.goodScroll = new Bscroll(this.$refs.foodMenu, {
+        probeType: 3
+      })
+      this.goodScroll.on('scroll', (pos) => {
+        this.scrollY = Math.abs(Math.round(pos.y))
+      })
     },
     _calculateHeight () {
       let foodList = this.$refs.foodMenu.getElementsByClassName('foodList')
