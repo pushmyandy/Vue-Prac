@@ -49,14 +49,14 @@ export default {
     height 100%
     .homeTab
       width 100%
-      height 4rem
+      height 3.5rem
       border-1px(rgba(7,17,27,0.1))
       display flex
       flex-direction row
       a
         flex 1
         text-align center
-        line-height 4rem
+        line-height 3.5rem
     .active
       color rgb(240,20,20)
     .content

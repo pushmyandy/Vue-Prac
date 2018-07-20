@@ -134,7 +134,7 @@ export default {
           .brand
             display inline-block
             vertical-align top
-            bg-image('brand')
+            bg-image('./imgs/brand')
             width 1.8rem
             height 1.3rem
             background-size 1.8rem 1.3rem
@@ -156,15 +156,15 @@ export default {
             background-repeat no-repeat
             vertical-align top
             &.decrease
-              bg-image('decrease_1')
+              bg-image('./imgs/decrease_1')
             &.discount
-              bg-image('discount_1')
+              bg-image('./imgs/discount_1')
             &.invoice
-              bg-image('invoice_1')
+              bg-image('./imgs/invoice_1')
             &.guarantee
-              bg-image('guarantee_1')
+              bg-image('./imgs/guarantee_1')
             &.special
-              bg-image('special_1')
+              bg-image('./imgs/special_1')
           .sellerDescription
             vertical-align top
             display inline-block
@@ -205,7 +205,7 @@ export default {
       .broadcastTitle
         width 10%
         height 100%
-        bg-image('bulletin')
+        bg-image('./imgs/bulletin')
         background-repeat no-repeat
         background-size 2rem 1.5rem
         margin-top 0.5rem
@@ -288,15 +288,15 @@ export default {
               background-size 1.5rem 1.5rem
               background-repeat no-repeat
               &.decrease
-                bg-image('decrease_2')
+                bg-image('./imgs/decrease_2')
               &.discount
-                bg-image('discount_2')
+                bg-image('./imgs/discount_2')
               &.invoice
-                bg-image('invoice_2')
+                bg-image('./imgs/invoice_2')
               &.guarantee
-                bg-image('guarantee_2')
+                bg-image('./imgs/guarantee_2')
               &.special
-                bg-image('special_2')
+                bg-image('./imgs/special_2')
             .supportTexts
               display inline-block
               font-size 1rem

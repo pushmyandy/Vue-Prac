@@ -40,15 +40,20 @@
         </li>
       </ul>
     </div>
+    <cart></cart>
   </div>
 </template>
 
 <script>
 import Bscroll from 'better-scroll'
+import Cart from './cart/cart'
 export default {
   name: 'homeGoods',
   props: {
     seller: Object
+  },
+  components: {
+    Cart
   },
   data () {
     return {
@@ -157,21 +162,21 @@ export default {
           background-repeat no-repeat
           vertical-align top
           &.decrease
-            bg-image('decrease_3')
+            bg-image('./imgs/decrease_3')
           &.discount
-            bg-image('discount_3')
+            bg-image('./imgs/discount_3')
           &.invoice
-            bg-image('invoice_3')
+            bg-image('./imgs/invoice_3')
           &.guarantee
-            bg-image('guarantee_3')
+            bg-image('./imgs/guarantee_3')
           &.special
-            bg-image('special_3')
+            bg-image('./imgs/special_3')
     .rightMenu
       flex: 1
       .goodsTitle
         padding-left 0.2rem
         border-left 2px solid #d9dde1
-        font-size 1.2rem
+        font-size 1rem
         line-height 1.6rem
         background #f3f5f7
         color rgb(147, 153, 159)
