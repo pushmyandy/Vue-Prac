@@ -12,7 +12,30 @@
         </li>
       </ul>
     </div>
-    <div class="rightMenu"></div>
+    <div class="rightMenu">
+      <ul>
+        <li v-for="(item, index) in goods" :key="index">
+          <h1 class="goodsTitle">{{item.name}}</h1>
+          <ul>
+            <li v-for="(food, index) in item.foods" :key="index">
+              <div class="foodIcon"><img :src="food.icon"></div>
+              <div class="foodContent">
+                <h2 class="foodName">{{food.name}}</h2>
+                <p class="foodDesc">{{food.description}}</p>
+                <div class="extra">
+                  <span>月售{{food.sellCount}}份</span>
+                  <span>好评率{{food.rating}}%</span>
+                </div>
+                <div>
+                  <span>￥{{food.price}}</span>
+                  <span v-show="food.oldPrice">￥{{food.oldPrice}}</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -66,7 +89,7 @@ export default {
           display table-cell
           width 100%
           vertical-align middle
-          border-1px(gray)
+          border-1px(lightgray)
         .icon
           display inline-block
           width 1rem
@@ -84,4 +107,6 @@ export default {
             bg-image('guarantee_3')
           &.special
             bg-image('special_3')
+    .rightMenu
+      
 </style>

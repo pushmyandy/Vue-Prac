@@ -27,7 +27,8 @@ export default new Router({
           path: '/ratings',
           component: Ratings
         }
-      ]
+      ],
+      redirect: '/goods' // 默认显示goods子路由
     }
   ]
 })
