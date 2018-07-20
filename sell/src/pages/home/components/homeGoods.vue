@@ -1,8 +1,9 @@
 <template>
   <div class="goods">
-    <div class="leftMenu">
-      <ul>
-        <li v-for="(item, index) in goods" :key="index" class="leftItem">
+    <div class="leftMenu" ref="leftMenu">
+      <ul >
+        <li v-for="(item, index) in goods" :key="index"
+         class="leftItem" >
           <span class="text border-1px">
             <span v-show="item.type>0" class="icon"
                   :class="classMap[item.type]"
@@ -12,9 +13,9 @@
         </li>
       </ul>
     </div>
-    <div class="rightMenu">
-      <ul>
-        <li v-for="(item, index) in goods" :key="index">
+    <div class="rightMenu" ref="foodMenu">
+      <ul >
+        <li v-for="(item, index) in goods" :key="index" class="foodList">
           <h1 class="goodsTitle">{{item.name}}</h1>
           <ul>
             <li v-for="(food, index) in item.foods" :key="index"
@@ -42,6 +43,7 @@
 </template>
 
 <script>
+import Bscroll from 'better-scroll'
 export default {
   name: 'homeGoods',
   props: {
@@ -50,7 +52,8 @@ export default {
   data () {
     return {
       ERR_OK: 0,
-      goods: []
+      goods: [],
+      listHeight: []
     }
   },
   created () {
@@ -61,6 +64,26 @@ export default {
         this.goods = res.data
       }
     })
+    this.$nextTick(() => {
+      this._initScroll()
+      this._calculateHeight()
+    })
+  },
+  methods: {
+    _initScroll () {
+      this.menuScroll = new Bscroll(this.$refs.leftMenu, {})
+      this.goodScroll = new Bscroll(this.$refs.foodMenu, {})
+    },
+    _calculateHeight () {
+      let foodList = this.$refs.foodMenu.getElementsByClassName('foodList')
+      let height = 0
+      this.listHeight.push(height)
+      for (let i = 0; i < foodList.height; i++) {
+        let item = foodList[i]
+        height += item.clientHeight
+        this.listHeight.push(height)
+      }
+    }
   }
 }
 </script>
@@ -123,8 +146,10 @@ export default {
         margin 1rem
         padding-bottom 1rem
         border-1px(lightgray)
-        &.last-child
-          padding-bottom 0
+        &:last-child
+          margin-bottom 0
+          &:after
+            display none
         .foodIcon
           width 5rem
           height 5rem
@@ -139,6 +164,8 @@ export default {
             line-height 1.3rem
             font-weight 800
           .foodDesc
+            display block
+            width 10rem
             font-size 1rem
             line-height 1rem
             color lightgray
@@ -149,7 +176,7 @@ export default {
             font-size 1rem
             line-height 1rem
             color lightgray
-            &.first-child
+            &:first-child
               margin-right 1rem
           .foodPrice
             font-size 1.2rem
