@@ -1,8 +1,11 @@
 <template>
     <div class="cartControl">
-      <div class="decrease icon-remove_circle_outline"
-           @click="decreaseCount"
-           v-show="food.count > 0"></div>
+      <transition name="move">
+        <div @click="decreaseCount"
+             v-show="food.count > 0" class="decrease">
+          <span class="icon-remove_circle_outline"></span>
+        </div>
+      </transition>
       <div class="count" v-show="food.count > 0">{{food.count}}</div>
       <div class="increase icon-add_circle" @click="addCount"></div>
     </div>
@@ -35,6 +38,11 @@ export default {
 
 <style scoped lang="stylus">
   .cartControl
+    .move-enter,.move-leave-to
+      opacity 0
+      transform translateX(2rem) rotate(90deg)
+    .move-enter-active,.move-leave-active
+      transition all 1s ease
     .decrease
       font-size 1.5rem
       display inline-block

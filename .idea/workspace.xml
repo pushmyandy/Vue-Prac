@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41491ba3-fce4-4011-ba09-e556b748a5f9" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/sell/src/pages/home/components/cartControl/cartcontrol.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sell/src/pages/home/components/homeGoods.vue" beforeDir="false" afterPath="$PROJECT_DIR$/sell/src/pages/home/components/homeGoods.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sell/src/pages/home/components/homeHeader.vue" beforeDir="false" afterPath="$PROJECT_DIR$/sell/src/pages/home/components/homeHeader.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sell/src/pages/home/components/cartControl/cartcontrol.vue" beforeDir="false" afterPath="$PROJECT_DIR$/sell/src/pages/home/components/cartControl/cartcontrol.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -34,8 +31,8 @@
       <file leaf-file-name="cartcontrol.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sell/src/pages/home/components/cartControl/cartcontrol.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="28" column="22" lean-forward="true" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
+            <state relative-caret-position="273">
+              <caret line="42" column="32" lean-forward="true" selection-start-line="42" selection-start-column="32" selection-end-line="42" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -86,8 +83,8 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="681" />
-    <option name="y" value="25" />
+    <option name="x" value="594" />
+    <option name="y" value="11" />
     <option name="width" value="1442" />
     <option name="height" value="1100" />
   </component>
@@ -198,15 +195,15 @@
       <option name="presentableId" value="Default" />
       <updated>1532132948508</updated>
       <workItem from="1532132954815" duration="4501000" />
-      <workItem from="1532143919982" duration="7630000" />
+      <workItem from="1532143919982" duration="9234000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12131000" />
+    <option name="totallyTimeSpent" value="13735000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="681" y="25" width="1442" height="1100" extended-state="0" />
+    <frame x="594" y="11" width="1442" height="1100" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21296297" />
@@ -375,8 +372,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sell/src/pages/home/components/cartControl/cartcontrol.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="28" column="22" lean-forward="true" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
+        <state relative-caret-position="273">
+          <caret line="42" column="32" lean-forward="true" selection-start-line="42" selection-start-column="32" selection-end-line="42" selection-end-column="32" />
         </state>
       </provider>
     </entry>
