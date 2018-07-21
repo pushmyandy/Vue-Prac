@@ -1,5 +1,5 @@
 <template>
-  <div class="goods">
+  <div class="goods" >
     <div class="leftMenu" ref="leftMenu">
       <ul>
         <li v-for="(item, index) in goods" :key="index"
@@ -35,7 +35,7 @@
                   <span v-show="food.oldPrice" class="oldPrice">￥{{food.oldPrice}}</span>
                 </div>
                 <div class="cartWrapper">
-                  <cart-control :food="food"></cart-control>
+                  <cart-control :food="food" v-on:cartAdd="cartRound"></cart-control>
                 </div>
               </div>
             </li>
@@ -43,7 +43,7 @@
         </li>
       </ul>
     </div>
-    <cart :selectFoods = "selectFoods"
+    <cart ref="shopCart" :selectFoods = "selectFoods"
       :delivery-price = "seller.deliveryPrice"
           :minPrice="seller.minPrice"></cart>
   </div>
@@ -133,6 +133,11 @@ export default {
       let foodList = this.$refs.foodMenu.getElementsByClassName('listFood')
       let el = foodList[index]
       this.foodScroll.scrollToElement(el, 300) // 滚动接口 后面是时间
+    },
+    cartRound (el) {
+      this.$nextTick(() => { // 优化贝塞尔曲线的卡顿
+        this.$refs['shopCart'].drop(el)
+      })
     }
   }
 }

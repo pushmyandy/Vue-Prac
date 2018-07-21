@@ -18,15 +18,17 @@ export default {
   props: {
     food: Object
   },
-  created () {
-
-  },
   methods: {
     addCount () {
       if(!this.food.count) {
         Vue.set(this.food, 'count', 1)
       } else {
         this.food.count++
+      }
+      try {
+        this.$emit('cartAdd', event.target)
+      }catch (e) {
+        console.log("error")
       }
     },
     decreaseCount () {
@@ -60,4 +62,5 @@ export default {
       font-size 1.5rem
       display inline-block
       color rgb(0,160,220)
+
 </style>
