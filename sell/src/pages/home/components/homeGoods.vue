@@ -34,6 +34,9 @@
                   <span class="foodPrice">￥{{food.price}}</span>
                   <span v-show="food.oldPrice" class="oldPrice">￥{{food.oldPrice}}</span>
                 </div>
+                <div class="cartWrapper">
+                  <cart-control :food="food"></cart-control>
+                </div>
               </div>
             </li>
           </ul>
@@ -48,13 +51,15 @@
 <script>
 import Bscroll from 'better-scroll'
 import Cart from './cart/cart'
+import CartControl from './cartControl/cartcontrol'
 export default {
   name: 'homeGoods',
   props: {
     seller: Object
   },
   components: {
-    Cart
+    Cart,
+    CartControl
   },
   data () {
     return {
@@ -95,6 +100,7 @@ export default {
         click: true
       })
       this.foodScroll = new Bscroll(this.$refs.foodMenu, {
+        click: true,
         probeType: 3 // 获取滚动距离
       })
       this.foodScroll.on('scroll', (pos) => {
@@ -226,4 +232,8 @@ export default {
             line-height 1rem
             font-weight 700
             color lightgray
+          .cartWrapper
+            position absolute
+            right 0
+            bottom 0.5rem
 </style>
