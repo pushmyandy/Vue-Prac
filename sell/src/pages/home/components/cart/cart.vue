@@ -8,13 +8,14 @@
                     :class="{'highlight': totalCount>0}"
               ></span>
             </div>
-            <div class="number" v-show="totalCount>0">
+            <div class="number" v-show="totalCount">
+              {{totalCount}}
             </div>
           </div>
           <div class="price" :class="{'highlight': totalCount>0}">￥{{totalPrice}}</div>
           <div class="desc">另需配送费{{deliveryPrice}}元</div>
         </div>
-        <div class="contentRight" :class=" totalPrice>minPrice ? 'enough' : 'notEnough' ">
+        <div class="contentRight" :class=" totalPrice>=minPrice ? 'enough' : 'notEnough' ">
           <span>{{payDesc}}</span>
         </div>
       </div>
@@ -31,18 +32,17 @@ export default {
   },
   computed: {
     totalPrice () {
-      let total = 30
-      // this.selectFoods.forEach((food) => {
-      //   total += food.price * food.count
-      // })
+      let total = 0
+      this.selectFoods.forEach((food) => {
+        total += food.price * food.count
+      })
       return total
     },
     totalCount () {
-      let count = 10
-      // this.selectFoods.forEach((food) => {
-      //   count += food.count
-      // })
-      count++
+      let count = 0
+      this.selectFoods.forEach((food) => {
+        count += food.count
+      })
       return count
     },
     payDesc () {
@@ -51,7 +51,7 @@ export default {
       } else if (this.totalPrice < this.minPrice) {
         let diff = this.minPrice - this.totalPrice
         return `还差￥${diff}起送`
-      } else {
+      } else if (this.totalPrice >= this.minPrice) {
         return '去结算'
       }
     }
