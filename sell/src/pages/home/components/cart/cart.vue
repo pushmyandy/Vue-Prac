@@ -1,6 +1,7 @@
 <template>
+  <div>
     <div class="cart">
-      <div class="content">
+      <div class="content" @click="toggleDetail">
         <div class="contentLeft">
           <div class="logoWrapper">
             <div class="logoIcon" :class="{'highlight': totalCount>0}">
@@ -15,7 +16,8 @@
           <div class="price" :class="{'highlight': totalCount>0}">￥{{totalPrice}}</div>
           <div class="desc">另需配送费{{deliveryPrice}}元</div>
         </div>
-        <div class="contentRight" :class=" totalPrice>=minPrice ? 'enough' : 'notEnough' ">
+        <div class="contentRight"  @click.stop.prevent="pay"
+             :class=" totalPrice>=minPrice ? 'enough' : 'notEnough' ">
           <span>{{payDesc}}</span>
         </div>
         <div class="ballContainer">
@@ -31,12 +33,41 @@
           </div>
         </div>
       </div>
+      <transition name="detailAni">
+        <div class="cartDetail" v-show="detailShow">
+          <div class="detailHeader">
+            <h1 class="title">购物车</h1>
+            <span class="empty" @click="empty">清空</span>
+          </div>
+          <div class="detailContent" ref="detailContent">
+            <ul>
+              <li class="food" v-for="(food, index) in selectFoods"
+                  :key="index">
+                <span class="name">{{food.name}}</span>
+                <div class="price">
+                  <span>￥{{food.price*food.count}}</span>
+                </div>
+                <div class="cartControlWrapper">
+                  <cartcontrol :food="food"></cartcontrol>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </transition>
     </div>
+    <transition name="fade">
+      <div class="mask" v-show="detailShow" @click="hideMask"></div>
+    </transition>
+  </div>
 </template>
 
 <script>
+import Cartcontrol from "../cartControl/cartcontrol";
+import Bscroll from 'better-scroll'
 export default {
   name: 'cart',
+  components: {Cartcontrol},
   props: {
     deliveryPrice: Number,
     minPrice: Number,
@@ -66,6 +97,24 @@ export default {
       } else if (this.totalPrice >= this.minPrice) {
         return '去结算'
       }
+    },
+    detailShow () {
+      if (!this.totalCount) {
+        this.fold = true
+        return false
+      }
+      let show = !this.fold
+      if (show) {
+        this.$nextTick(() => {
+          if(!this.scroll) {
+          this.scroll = new Bscroll(this.$refs.detailContent, {
+            click: true
+          })} else {
+            this.scroll.refresh()
+          }
+        })
+      }
+      return show
     }
   },
   data () {
@@ -87,7 +136,8 @@ export default {
           show: false
         }
       ],
-      dropBall: []
+      dropBall: [],
+      fold: true
     }
   },
   methods: {
@@ -144,6 +194,25 @@ export default {
         ball.show = false
         el.style.display = 'none'
       }
+    },
+    toggleDetail () {
+      if(!this.totalCount) {
+        return
+      }
+      this.fold = !this.fold
+    },
+    empty () {
+      this.selectFoods.forEach((food) => {
+        food.count = 0
+      })
+    },
+    hideMask () {
+      this.fold = true
+    },
+    pay () {
+      if(this.totalPrice < this.minPrice) {
+        return
+      }
     }
   }
 }
@@ -158,7 +227,9 @@ export default {
     height 4rem
     z-index 50
     .content
+      position relative
       display flex
+      width 100%
       height 100%
       background #141d27
       .contentLeft
@@ -250,4 +321,78 @@ export default {
             border-radius: 50%
             background: rgb(0, 160, 220)
             transition: all 0.4s linear
+    .cartDetail
+      position absolute
+      width 100%
+      top 0
+      left 0
+      right 0
+      z-index -1
+      transform translate3d(0, -100%, 0)
+      .detailHeader
+        height 3.5rem
+        line-height 3.5rem
+        padding 0 1.2rem
+        background #f3f5f7
+        border-bottom 1px solid rgba(7,17,31,0.1)
+        .title
+          float left
+          font-size 1rem
+          color rgb(7,17,27)
+        .empty
+          float right
+          font-size 1rem
+          color rgb(0,160,220)
+      .detailContent
+        background white
+        max-height 15rem
+        overflow hidden
+        .food
+          position relative
+          padding 1rem
+          box-sizing border-box
+          border-bottom  1px solid rgba(7, 17, 27, 0.1)
+          .name
+            line-height 2em
+            font-size 1.4rem
+            color rgb(7, 17, 27)
+          .price
+            position absolute
+            right 5.5rem
+            bottom 1.1rem
+            line-height 2rem
+            font-weight 700
+            color rgb(240, 20, 20)
+          .cartControlWrapper
+            position absolute
+            right 0.2rem
+            bottom 1.2rem
+    .detailAni-enter, .detailAni-leave-to
+      transform translate3d(0, 0, 0)
+    .detailAni-enter-active, .detailAni-leave-active
+      transition all 0.5s
+  .mask
+    position fixed
+    top 0
+    left 0
+    width 100%
+    height 100%
+    z-index 40
+    backdrop-filter: blur(10px)
+    opacity: 1
+    background: rgba(7, 17, 27, 0.6)
+  .fade-enter-active
+    animation fade 1s
+  .fade-leave-active
+    animation fade .5s reverse
+  @keyframes fade {
+    0% {
+      opacity 0
+      background: rgba(7, 17, 27, 0)
+    }
+    100% {
+      opacity 1
+      background rgba(7, 17, 27, 0.6)
+    }
+  }
 </style>

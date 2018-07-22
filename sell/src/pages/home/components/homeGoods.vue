@@ -35,7 +35,7 @@
                   <span v-show="food.oldPrice" class="oldPrice">￥{{food.oldPrice}}</span>
                 </div>
                 <div class="cartWrapper">
-                  <cart-control :food="food" v-on:cartAdd="cartRound"></cart-control>
+                  <cart-control :food="food" v-on:cartAdd="cartRound"></cart-control> <!--监听子组件的方法-->
                 </div>
               </div>
             </li>
@@ -77,8 +77,8 @@ export default {
       if (res.errno === this.ERR_OK) {
         this.goods = res.data
         this.$nextTick(() => { // 等待渲染完成
-          this._initScroll()
-          this._calculateHeight()
+          this._initScroll() // 获取this.scrollY
+          this._calculateHeight() //得到每一个list的高度和的数组
         })
       }
     })
@@ -89,7 +89,7 @@ export default {
         let preHeight = this.listHeight[i]
         let afterHeight = this.listHeight[i + 1]
         if (!afterHeight || (this.scrollY >= preHeight && this.scrollY < afterHeight)) {
-          return i
+          return i // 落点在一个list的上高和下高间
         }
       }
       return 0
@@ -126,13 +126,13 @@ export default {
       for (let i = 0; i < foodList.length; i++) {
         let item = foodList.item(i)
         height += item.clientHeight
-        this.listHeight.push(height)
+        this.listHeight.push(height) //等差数列
       }
     },
     handleLeftClick (index) {
       let foodList = this.$refs.foodMenu.getElementsByClassName('listFood')
       let el = foodList[index]
-      this.foodScroll.scrollToElement(el, 300) // 滚动接口 后面是时间
+      this.foodScroll.scrollToElement(el, 300) // 滚动接口 后面是时间 foodScroll是一个Bscroll对象
     },
     cartRound (el) {
       this.$nextTick(() => { // 优化贝塞尔曲线的卡顿

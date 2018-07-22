@@ -21,7 +21,7 @@ export default {
   methods: {
     addCount () {
       if(!this.food.count) {
-        Vue.set(this.food, 'count', 1)
+        Vue.set(this.food, 'count', 1) // 添加一个属性为count
       } else {
         this.food.count++
       }
