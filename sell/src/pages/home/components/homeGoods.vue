@@ -1,51 +1,54 @@
 <template>
-  <div class="goods" >
-    <div class="leftMenu" ref="leftMenu">
-      <ul>
-        <li v-for="(item, index) in goods" :key="index"
-         class="leftItem" :class="{'current': currentIndex === index}"
-        @click="handleLeftClick(index)">
-          <span class="text border-1px">
-            <span v-show="item.type>0" class="icon"
-                  :class="classMap[item.type]"
-            ></span>
-            {{item.name}}
-          </span>
-        </li>
-      </ul>
+  <div>
+    <div class="goods" >
+      <div class="leftMenu" ref="leftMenu">
+        <ul>
+          <li v-for="(item, index) in goods" :key="index"
+           class="leftItem" :class="{'current': currentIndex === index}"
+          @click="handleLeftClick(index)">
+            <span class="text border-1px">
+              <span v-show="item.type>0" class="icon"
+                    :class="classMap[item.type]"
+              ></span>
+              {{item.name}}
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div class="rightMenu" ref="foodMenu">
+        <ul >
+          <li v-for="(item, index) in goods" :key="index" class="listFood">
+            <h1 class="goodsTitle">{{item.name}}</h1>
+            <ul>
+              <li v-for="(food, index) in item.foods" :key="index"
+              class="foodItem border-1px" @click="selectFood(food)"
+              >
+                <div class="foodIcon"><img :src="food.icon"></div>
+                <div class="foodContent">
+                  <h2 class="foodName">{{food.name}}</h2>
+                  <p class="foodDesc">{{food.description}}</p>
+                  <div class="extra">
+                    <span>月售{{food.sellCount}}份</span>
+                    <span>好评率{{food.rating}}%</span>
+                  </div>
+                  <div>
+                    <span class="foodPrice">￥{{food.price}}</span>
+                    <span v-show="food.oldPrice" class="oldPrice">￥{{food.oldPrice}}</span>
+                  </div>
+                  <div class="cartWrapper">
+                    <cart-control :food="food" v-on:cartAdd="cartRound"></cart-control> <!--监听子组件的方法-->
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <cart ref="shopCart" :selectFoods = "selectFoods"
+        :delivery-price = "seller.deliveryPrice"
+            :minPrice="seller.minPrice"></cart>
     </div>
-    <div class="rightMenu" ref="foodMenu">
-      <ul >
-        <li v-for="(item, index) in goods" :key="index" class="listFood">
-          <h1 class="goodsTitle">{{item.name}}</h1>
-          <ul>
-            <li v-for="(food, index) in item.foods" :key="index"
-            class="foodItem border-1px"
-            >
-              <div class="foodIcon"><img :src="food.icon"></div>
-              <div class="foodContent">
-                <h2 class="foodName">{{food.name}}</h2>
-                <p class="foodDesc">{{food.description}}</p>
-                <div class="extra">
-                  <span>月售{{food.sellCount}}份</span>
-                  <span>好评率{{food.rating}}%</span>
-                </div>
-                <div>
-                  <span class="foodPrice">￥{{food.price}}</span>
-                  <span v-show="food.oldPrice" class="oldPrice">￥{{food.oldPrice}}</span>
-                </div>
-                <div class="cartWrapper">
-                  <cart-control :food="food" v-on:cartAdd="cartRound"></cart-control> <!--监听子组件的方法-->
-                </div>
-              </div>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-    <cart ref="shopCart" :selectFoods = "selectFoods"
-      :delivery-price = "seller.deliveryPrice"
-          :minPrice="seller.minPrice"></cart>
+    <food :food="selectedFood" ref="food"></food>
   </div>
 </template>
 
@@ -53,6 +56,7 @@
 import Bscroll from 'better-scroll'
 import Cart from './cart/cart'
 import CartControl from './cartControl/cartcontrol'
+import Food from './food/food'
 export default {
   name: 'homeGoods',
   props: {
@@ -60,14 +64,16 @@ export default {
   },
   components: {
     Cart,
-    CartControl
+    CartControl,
+    Food
   },
   data () {
     return {
       ERR_OK: 0,
       goods: [],
       listHeight: [],
-      scrollY: 0
+      scrollY: 0,
+      selectedFood: {}
     }
   },
   created () {
@@ -138,6 +144,10 @@ export default {
       this.$nextTick(() => { // 优化贝塞尔曲线的卡顿
         this.$refs['shopCart'].drop(el)
       })
+    },
+    selectFood (food) {
+      this.selectedFood = food
+      this.$refs.food.show()
     }
   }
 }
