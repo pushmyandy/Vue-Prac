@@ -27,7 +27,11 @@
           </transition>
         </div>
       </div>
-
+      <split v-show="food.info"></split>
+      <div class="info" v-show="food.info">
+        <h1 class="title">商品信息</h1>
+        <div class="text">{{food.info}}</div>
+      </div>
     </div>
   </transition>
 </template>
@@ -35,10 +39,14 @@
 <script>
 import Bscroll from 'better-scroll'
 import CartControl from '../cartControl/cartcontrol'
+import Split from '../split/split'
 import Vue from 'vue'
 export default {
   name: 'food',
-  components: {CartControl},
+  components: {
+    CartControl,
+    Split
+  },
   props: {
     food: Object
   },
@@ -150,6 +158,16 @@ export default {
       font-size 1rem
       color white
       background rgb(0, 160, 220)
+    .info
+      padding 1rem
+      .title
+        line-height 1rem
+        margin-bottom 0.5rem
+        font-size 1rem
+        color rgb(7,17,27)
+      .text
+        line-height 2rem
+
     .fade-enter-active, .fade-leave-active
       transition all 1s
     .fade-enter, .fade-leave-to
