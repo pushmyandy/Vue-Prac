@@ -1,7 +1,7 @@
 <template>
-  <transition name="move">
+  <transition name="move" >
     <div class="food" v-show="showFlag" ref="food">
-      <div class="foodContent">
+      <div class="foodContent" >
         <div class="image">
           <img :src="food.image">
           <div class="back" @click="backTo">
@@ -26,46 +26,68 @@
                  class="buy" v-show="!food.count || food.count===0">加入购物车</div>
           </transition>
         </div>
-      </div>
-      <split v-show="food.info"></split>
-      <div class="info" v-show="food.info">
-        <h1 class="title">商品信息</h1>
-        <div class="text">{{food.info}}</div>
+        <split v-show="food.info"></split>
+        <div class="info" v-show="food.info">
+          <h1 class="title">商品信息</h1>
+          <div class="text">{{food.info}}</div>
+        </div>
+        <split v-show="food.info"></split>
+        <div class="rating">
+          <h1 class="title">商品评价</h1>
+          <rating :select-type="selectType" :only-content="onlyContent"
+          :desc="desc" :ratings="food.ratings"></rating>
+        </div>
       </div>
     </div>
   </transition>
 </template>
 
 <script>
-import Bscroll from 'better-scroll'
+import BScroll from 'better-scroll'
 import CartControl from '../cartControl/cartcontrol'
 import Split from '../split/split'
 import Vue from 'vue'
+import Rating from '../rating/rating'
+
+const POSITIVE = 0
+const NEGATIVE = 1
+const ALL = 2
+
 export default {
   name: 'food',
   components: {
     CartControl,
-    Split
+    Split,
+    Rating
   },
   props: {
     food: Object
   },
   data () {
     return {
-      showFlag: false
+      showFlag: false,
+      selectType: ALL,
+      onlyContent: true,
+      desc: {
+        all: '全部',
+        positive: '推荐',
+        negative: '吐槽'
+      }
     }
   },
   methods: {
     show () {
       this.showFlag = true
+      this.selectFood = ALL
+      this.onlyContent = true
       this.$nextTick(() => {
         if(!this.scroll) {
-          this.scroll = new Bscroll(this.$refs.food, {
+          this.scroll = new BScroll(this.$refs.food, {
             click: true
           }) }
-          else {
-            this.scroll.refresh()
-          }
+        else {
+          this.scroll.refresh()
+        }
       })
     },
     backTo (event) {
@@ -113,6 +135,7 @@ export default {
         color white
         background rgba(0, 0, 0, 0.8)
     .content
+      position relative
       padding 1rem
       .title
         font-size 2rem
@@ -167,7 +190,13 @@ export default {
         color rgb(7,17,27)
       .text
         line-height 2rem
-
+    .rating
+      padding-top 1.2rem
+      .title
+        line-height 1rem
+        margin-left 1.5rem
+        font-size 1rem
+        color rgb(7,17,27)
     .fade-enter-active, .fade-leave-active
       transition all 1s
     .fade-enter, .fade-leave-to
