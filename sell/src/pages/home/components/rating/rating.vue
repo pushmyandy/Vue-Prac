@@ -1,11 +1,17 @@
 <template>
     <div class="ratingSelect">
       <div class="ratingType">
-        <span class="block positive" :class="{'active': selectType===2}">{{desc.all}}</span>
-        <span class="block positive" :class="{'active': selectType===0}">{{desc.positive}}</span>
-        <span class="block negative" :class="{'active': selectType===1}">{{desc.negative}}</span>
+        <span @click="select(2)" class="block positive" :class="{'active': cType===2}">{{desc.all}}
+          <span class="count">{{ratings.length}}</span>
+        </span>
+        <span @click="select(0)" class="block positive" :class="{'active': cType===0}">{{desc.positive}}
+          <span class="count">{{positives.length}}</span>
+        </span>
+        <span @click="select(1)" class="block negative" :class="{'active': cType===1}">{{desc.negative}}
+          <span class="count">{{negatives.length}}</span>
+        </span>
       </div>
-      <div class="switch">
+      <div @click="toggleContent" class="switch" :class="{'on': cContent}">
         <span class="icon-check_circle"></span>
         <span class="text">只看有内容的评价</span>
       </div>
@@ -37,6 +43,34 @@ export default {
           negative: '不满意'
         }
       }
+    }
+  },
+  data () {
+    return {
+      cType: this.selectType,
+      cContent: this.onlyContent// 防止更改父元素值
+    }
+  },
+  computed: {
+    positives () {
+      return this.ratings.filter((rating) => {
+        return rating.rateType === POSITIVE
+      })
+    },
+    negatives () {
+      return this.ratings.filter((rating) => {
+        return rating.rateType === NEGATIVE
+      })
+    }
+  },
+  methods: {
+    select (type) {
+      this.cType = type
+      this.$emit('typeChange', type)
+    },
+    toggleContent () {
+      this.cContent = !this.cContent
+      this.$emit('contentChange', this.cContent)
     }
   }
 }
@@ -71,4 +105,19 @@ export default {
           background rgba(77, 85, 93, 0.2)
           &.active
             background rgb(77, 85, 93)
+  .switch
+    padding 1rem 1.2rem
+    line-height 1.8rem
+    font-size 1.5rem
+    border-bottom 1px solid rgba(7, 17, 27, 0.2)
+    color rgb(147, 153, 159)
+    &.on
+      .icon-check_circle
+        color #00c850
+    .icon-check_circle
+      font-size 1.8rem
+      display inline-block
+      margin-right 0.4rem
+    .text
+      font-size 1rem
 </style>
