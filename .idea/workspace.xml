@@ -4,10 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/sell/src/pages/home/components/rating/rating.vue" line="6" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="41491ba3-fce4-4011-ba09-e556b748a5f9" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sell/src/pages/home/components/rating/rating.vue" beforeDir="false" afterPath="$PROJECT_DIR$/sell/src/pages/home/components/rating/rating.vue" afterDir="false" />
-    </list>
+    <list default="true" id="41491ba3-fce4-4011-ba09-e556b748a5f9" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -35,8 +32,8 @@
       <file leaf-file-name="rating.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sell/src/pages/home/components/rating/rating.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="7" column="41" selection-start-line="7" selection-start-column="41" selection-end-line="7" selection-end-column="41" />
+            <state relative-caret-position="312">
+              <caret line="13" column="71" lean-forward="true" selection-start-line="13" selection-start-column="71" selection-end-line="13" selection-end-column="71" />
               <folding>
                 <element signature="e#721#1043#0" />
               </folding>
@@ -92,8 +89,8 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="637" />
-    <option name="y" value="21" />
+    <option name="x" value="711" />
+    <option name="y" value="7" />
     <option name="width" value="1268" />
     <option name="height" value="1012" />
   </component>
@@ -263,15 +260,15 @@
       <workItem from="1532650923345" duration="37000" />
       <workItem from="1532652700251" duration="606000" />
       <workItem from="1532654161023" duration="639000" />
-      <workItem from="1532657445872" duration="861000" />
+      <workItem from="1532657445872" duration="1187000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79736000" />
+    <option name="totallyTimeSpent" value="80062000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="735" y="9" width="1268" height="1012" extended-state="0" />
+    <frame x="711" y="7" width="1268" height="1012" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22764228" />
@@ -656,8 +653,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sell/src/pages/home/components/rating/rating.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="7" column="41" selection-start-line="7" selection-start-column="41" selection-end-line="7" selection-end-column="41" />
+        <state relative-caret-position="312">
+          <caret line="13" column="71" lean-forward="true" selection-start-line="13" selection-start-column="71" selection-end-line="13" selection-end-column="71" />
           <folding>
             <element signature="e#721#1043#0" />
           </folding>
