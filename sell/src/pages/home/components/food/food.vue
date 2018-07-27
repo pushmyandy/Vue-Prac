@@ -38,19 +38,21 @@
           :desc="desc" :ratings="food.ratings"></rating>
           <div class="ratingWrapper">
             <ul v-show="food.ratings && food.ratings.length">
-              <li v-for="rating in food.ratings" class="ratingItem">
+              <li v-show="needShow(rating.rateType,rating.text)" v-for="rating in food.ratings" class="ratingItem">
                 <div class="user">
-                  <span class="name">{{ratings.username}}</span>
+                  <span class="name">{{rating.username}}</span>
                   <img class="avatar" width="12" height="12" :src="rating.avatar">
                 </div>
                 <div class="time">{{rating.rateTime}}</div>
                 <p class="text">
                   <span :class="{'icon-thumb_up':rating.rateType===0,
-                  'icon-thumb_down': rating.rateType===1}"></span>{{rating.type}}
+                  'icon-thumb_down': rating.rateType===1}"></span>{{rating.text}}
                 </p>
               </li>
             </ul>
-            <div class="noRating" v-show="!food.ratings || !food.ratings.length"></div>
+            <div class="noRating" v-show="!food.ratings || !food.ratings.length">
+              暂无评价
+            </div>
           </div>
         </div>
       </div>
@@ -64,6 +66,7 @@ import CartControl from '../cartControl/cartcontrol'
 import Split from '../split/split'
 import Vue from 'vue'
 import Rating from '../rating/rating'
+import {formDate} from "../../../../assets/js/date";
 
 const POSITIVE = 0
 const NEGATIVE = 1
@@ -106,12 +109,42 @@ export default {
         }
       })
     },
-    backTo (event) {
+    backTo () {
       this.showFlag = false
     },
     addFirst (event) {
       this.$emit('cartAdd', event.target)
       Vue.set(this.food, 'count', 1)
+    },
+    needShow(type, text) {
+      if(this.onlyContent && !text) {
+        return false
+      }
+      if(this.selectType === ALL) {
+        return true
+      } else {
+        return type === this.selectType
+      }
+    }
+  },
+  events: {
+    'typeChange' (type) {
+      this.selectType = type
+      this.$nextTick(() => {
+        this.scroll.refresh()
+      })
+    },
+    'contentChange' (onlyContent) {
+      this.onlyContent = onlyContent
+      this.$nextTick(() => {
+        this.scroll.refresh()
+      })
+    }
+  },
+  filter: {
+    formtDate(time) {
+      let date = new Date(time)
+      return formDate(date, 'yyyy-MM-dd hh:mm')
     }
   }
 }
@@ -213,6 +246,42 @@ export default {
         margin-left 1.5rem
         font-size 1rem
         color rgb(7,17,27)
+      .ratingWrapper
+        padding 1.2rem 0
+        .ratingItem
+          position relative
+          border 1px solid rgba(7,17,27,0.2)
+          .user
+            position absolute
+            right 0
+            top 1.2rem
+            font-size 0
+            line-height 1rem
+            .name
+              margin-right 0.3rem
+              display inline-block
+              vertical-align top
+              font-size 0.8rem
+              color rgb(147, 153, 159)
+            .avatar
+              border-radius 50%
+          .time
+            line-height 1rem
+            font-size 1rem
+            color rgb(147, 153, 159)
+            margin-bottom 0.5rem
+          .text
+            line-height 1rem
+            font-size 1rem
+            color rgb(7, 17, 27)
+            .icon-thumb_up, .icon-thumb_down
+              margin-right 4px
+              line-height 1.5rem
+              font-size 1rem
+            .icon-thumb_up
+              color rgb(0,160,220)
+            .icon-thumb_down
+              color rgb(147, 153, 159)
     .fade-enter-active, .fade-leave-active
       transition all 1s
     .fade-enter, .fade-leave-to

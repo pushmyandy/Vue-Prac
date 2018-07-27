@@ -59,7 +59,7 @@ export default {
     },
     negatives () {
       return this.ratings.filter((rating) => {
-        return rating.rateType === NEGATIVE // 提交测试
+        return rating.rateType === NEGATIVE
       })
     }
   },
