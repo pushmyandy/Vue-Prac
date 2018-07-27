@@ -46,7 +46,7 @@
                 <div class="time">{{rating.rateTime}}</div>
                 <p class="text">
                   <span :class="{'icon-thumb_up':rating.rateType===0,
-                  'icon-thumb_down': rating.rateType===1}"></span>
+                  'icon-thumb_down': rating.rateType===1}"></span>{{rating.type}}
                 </p>
               </li>
             </ul>
